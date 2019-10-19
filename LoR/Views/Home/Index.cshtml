@@ -1,8 +1,29 @@
-﻿@{
+﻿@model ResultModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+
+<div>
+    @if (string.IsNullOrEmpty(Model.Name) && string.IsNullOrEmpty(Model.SurName))
+    {
+        <form asp-controller="Home" asp-action="FormAction">
+            <input asp-for="Name"/>
+            <input asp-for="SurName" />
+            <input type="submit" />
+        </form>
+    }
+    else
+    {
+        <span>Bonjour @Model.FullName</span>
+    }
+</div>
+
+
+
+
+@*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -91,4 +112,4 @@
             <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
         </ul>
     </div>
-</div>
+</div>*@

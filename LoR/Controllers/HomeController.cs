@@ -12,7 +12,13 @@ namespace LoR.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var model = new ResultModel();
+            return View(model);
+        }
+
+        public IActionResult FormAction(ResultModel pModel)
+        {
+            return View("Index", pModel);
         }
 
         public IActionResult About()
