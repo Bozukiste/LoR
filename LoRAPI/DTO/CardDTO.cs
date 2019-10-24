@@ -12,7 +12,7 @@ namespace LoRAPI.DTO
 
         public string RiotId { get; set; }
 
-        public RegionRef RegionRef { get; set; }
+        public RegionRef? RegionRef { get; set; }
 
         public int Attack { get; set; }
 
@@ -28,9 +28,9 @@ namespace LoRAPI.DTO
 
         public KeywordsRef[] KeywordsRefs { get; set; }
 
-        public SpellSpeedRef SpellSpeed { get; set; }
+        public SpellSpeedRef? SpellSpeed { get; set; }
 
-        public RarityRef Rarity { get; set; }
+        public RarityRef? Rarity { get; set; }
 
         public int? SubType { get; set; }
 
@@ -40,9 +40,9 @@ namespace LoRAPI.DTO
 
         public bool Collectable { get; set; }
 
-        public string CardVisualLink { get; set; }
+        public string[] CardVisualLinks { get; set; }
 
-        public string FullArtworkLink { get; set; }
+        public string[] FullArtworkLinks { get; set; }
 
         public bool Legacy { get; set; }
     }

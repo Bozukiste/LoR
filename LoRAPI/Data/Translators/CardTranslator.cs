@@ -1,4 +1,6 @@
 ﻿using LoRAPI.DbSetup.Poco;
+using LoRAPI.DTO;
+using LoRAPI.Enums;
 using LoRAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -31,6 +33,59 @@ namespace LoRAPI.Data.Translators
                 RiotId = pData.CardCode,
                 SpellSpeed = pData.SpellSpeedRef != null ? (int)pData.SpellSpeedRef : new int?(),
             };
+        }
+
+        public static CardDTO Translate(Card pCard)
+        {
+            return new CardDTO
+            {
+                CardId = pCard.CardId,
+                Attack = pCard.Attack,
+                Collectable = pCard.Collectable,
+                CardVisualLinks = pCard.CardVisualLink.Split(JOIN_CHAR),
+                FullArtworkLinks = pCard.FullArtworkLink.Split(JOIN_CHAR),
+                Cost = pCard.Cost,
+                Description = pCard.Description,
+                FlavorText = pCard.FlavorText,
+                Health = pCard.Health,
+                KeywordsRefs = pCard.GetKeywordsRefs().ToArray(),
+                Legacy = pCard.Legacy,
+                Name = pCard.Name,
+                Rarity = pCard.GetRarity(),
+                RegionRef = pCard.GetRegionRef(),
+                SpellSpeed = pCard.GetSpellSpeed(),
+                RiotId = pCard.RiotId
+            };
+        }
+    }
+
+    public static class TranslationExtensions
+    {
+        private const char SPLIT_CHAR = ';';
+        public static IEnumerable<KeywordsRef> GetKeywordsRefs(this Card pCard)
+        {
+            foreach (var keyword in pCard.KeywordsRefs.Split(';'))
+            {
+                if (Enum.TryParse(keyword, true, out KeywordsRef kwRef))
+                {
+                    yield return kwRef;
+                }
+            }
+        }
+
+        public static RegionRef? GetRegionRef(this Card pCard)
+        {
+            return pCard.RegionRef != null ? (RegionRef)pCard.RegionRef : new RegionRef?();
+        }
+
+        public static SpellSpeedRef? GetSpellSpeed(this Card pCard)
+        {
+            return pCard.SpellSpeed != null ? (SpellSpeedRef)pCard.RegionRef : new SpellSpeedRef?();
+        }
+
+        public static RarityRef? GetRarity(this Card pCard)
+        {
+            return pCard.Rarity != null ? (RarityRef)pCard.Rarity : new RarityRef?();
         }
     }
 }

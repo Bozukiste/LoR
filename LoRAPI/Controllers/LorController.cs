@@ -2,38 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using LoRAPI.Data.Repositories;
+using LoRAPI.Data.Translators;
+using LoRAPI.DTO;
+using LoRAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace LoRAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/card")]
     public class LorController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly IMapper _mapper;
+
+        private readonly IDataRepository<Card> _cardRepository;
 
         private readonly ILogger<LorController> _logger;
 
-        public LorController(ILogger<LorController> logger)
+        public LorController(ILogger<LorController> logger, IMapper pMapper, IDataRepository<Card> pRepository)
         {
             _logger = logger;
+            _mapper = pMapper;
+            _cardRepository = pRepository;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet("{id}", Name = "Get")]
+        public IActionResult Get(long id)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var card = _cardRepository.Get(id);
+
+            if (card == null)
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                return NotFound("Card not found");
+            }
+
+            return Ok(CardTranslator.Translate(card));
         }
     }
 }
