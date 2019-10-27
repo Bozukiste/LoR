@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LoRAPI.Data.Translators
 {
-    public class CardTranslator
+    public static class CardTranslator
     {
         private const char JOIN_CHAR = ';';
         public static Card Translate(CardData pData)
@@ -33,6 +33,14 @@ namespace LoRAPI.Data.Translators
                 RiotId = pData.CardCode,
                 SpellSpeed = pData.SpellSpeedRef != null ? (int)pData.SpellSpeedRef : new int?(),
             };
+        }
+
+        public static IEnumerable<CardDTO> Translate(IEnumerable<Card> pCards)
+        {
+            foreach (var card in pCards)
+            {
+                yield return Translate(card);
+            }
         }
 
         public static CardDTO Translate(Card pCard)
@@ -64,12 +72,15 @@ namespace LoRAPI.Data.Translators
         private const char SPLIT_CHAR = ';';
         public static IEnumerable<KeywordsRef> GetKeywordsRefs(this Card pCard)
         {
-            foreach (var keyword in pCard.KeywordsRefs.Split(';'))
+            if (!string.IsNullOrEmpty(pCard.KeywordsRefs))
             {
-                if (Enum.TryParse(keyword, true, out KeywordsRef kwRef))
+                foreach (var keyword in pCard.KeywordsRefs.Split(';'))
                 {
-                    yield return kwRef;
-                }
+                    if (Enum.TryParse(keyword, true, out KeywordsRef kwRef))
+                    {
+                        yield return kwRef;
+                    }
+                } 
             }
         }
 

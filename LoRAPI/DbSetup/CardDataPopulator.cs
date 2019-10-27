@@ -14,7 +14,7 @@ namespace LoRAPI.DbSetup
     {
         public static IEnumerable<Card> Populate()
         {
-            var datas = RetreiveFromJson("C:\\Users\\genty\\source\\repos\\LoR\\LoRAPI\\DbSetup\\DbFiles\\set1-en_us.json");
+            var datas = RetreiveFromJson("C:\\Users\\Pierre\\source\\repos\\Bozukiste\\LoR\\LoRAPI\\DbSetup\\DbFiles\\set1-en_us.json");
             for(var i = 0; i < datas.Length; i++)
             {
                 datas[i].ID = i + 1;

@@ -338,3 +338,12 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/LoRAPI/Startup.cs
+/LoRAPI/Properties/launchSettings.json
+/LoRAPI/Program.cs
+/LoRAPI/LoRAPI.csproj
+/LoRAPI/DTO/CardDTO.cs
+/LoRAPI/DAO/CardDAO.cs
+/LoRAPI/Controllers/ValuesController.cs
+/LoRAPI/appsettings.json
+/LoRAPI/appsettings.Development.json

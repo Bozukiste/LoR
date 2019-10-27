@@ -32,9 +32,14 @@ namespace LoRAPI.Data.Managers
             _cardContext.SaveChanges();
         }
 
-        public Card Get(long pId)
+        public Card GetById(long pId)
         {
             return _cardContext.Cards.FirstOrDefault(c => c.CardId == pId);
+        }
+
+        public IEnumerable<Card> GetMultipleById(IEnumerable<long> pIds)
+        {
+            return _cardContext.Cards.Where(c => pIds.Contains(c.CardId));
         }
 
         public IEnumerable<Card> GetAll()

@@ -9,7 +9,9 @@ namespace LoRAPI.Data.Repositories
     {
         IEnumerable<TEntity> GetAll();
         
-        TEntity Get(long pId);
+        TEntity GetById(long pId);
+
+        IEnumerable<TEntity> GetMultipleById(IEnumerable<long> pIds);
 
         void Add(TEntity pEntity);
 
